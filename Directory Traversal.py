@@ -1,7 +1,8 @@
 import os
 
-dirpath, directories, files = next(os.walk('.'))
 
+dirpath, directories, files = next(os.walk('.'))
+result = ''
 file_dict = {}
 for el in files:
     value, key = el.split(".")
@@ -14,7 +15,11 @@ file_dict = dict(sorted(file_dict.items(), key = lambda kvp: kvp))
 
 for key, value in file_dict.items():
     value.sort()
-    result = f".{key}"
+    result +="\n" + f".{key}"
     for el in value:
         result += "\n" + f"- - - {el}.{key}"
-    print(result)
+
+desktop = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+path = os.path.join(desktop, "report.txt")
+with open(path, "w") as desktop_file:
+    desktop_file.write(result)
